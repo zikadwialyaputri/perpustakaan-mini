@@ -14,5 +14,11 @@ class Book extends Model
         'penerbit',
         'tahun',
         'cover',
+        'category_id',
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

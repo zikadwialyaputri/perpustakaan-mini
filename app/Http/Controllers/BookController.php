@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -14,8 +15,8 @@ class BookController extends Controller
                     ->orWhere('penulis', 'like', "%{$request->search}%");
             });
         })
-        ->orderByDesc('id')
-        ->paginate(10);
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('admin.books.index', compact('book'));
     }
@@ -23,6 +24,7 @@ class BookController extends Controller
     public function create()
     {
         return view('admin.books.create');
+        $categories = Category::all();
     }
 
     public function store(Request $request)
@@ -30,7 +32,7 @@ class BookController extends Controller
         $request->validate([
             'judul'   => 'required',
             'penulis' => 'required',
-            'cover'   => 'image|mimes:jpg,png,jpeg|max:2048'
+            'cover'   => 'image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $fileName = null;
@@ -42,11 +44,12 @@ class BookController extends Controller
         }
 
         Book::create([
-            'judul'     => $request->judul,
-            'penulis'   => $request->penulis,
-            'penerbit'  => $request->penerbit,
-            'tahun'     => $request->tahun,
-            'cover'     => $fileName,
+            'judul'       => $request->judul,
+            'penulis'     => $request->penulis,
+            'penerbit'    => $request->penerbit,
+            'tahun'       => $request->tahun,
+            'cover'       => $fileName,
+            'category_id' => $request->category_id,
         ]);
 
         return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan!');
@@ -55,14 +58,17 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         return view('admin.books.edit', compact('book'));
+        $categories = Category::all();
+
     }
 
     public function update(Request $request, Book $book)
     {
         $request->validate([
-            'judul'   => 'required',
-            'penulis' => 'required',
-            'cover'   => 'image|mimes:jpg,png,jpeg|max:2048'
+            'judul'       => 'required',
+            'penulis'     => 'required',
+            'cover'       => 'image|mimes:jpg,png,jpeg|max:2048',
+            'category_id' => $request->category_id,
         ]);
 
         $fileName = $book->cover;
@@ -71,7 +77,7 @@ class BookController extends Controller
         if ($request->hasFile('cover')) {
 
             // Hapus file lama (jika ada)
-            $oldPath = public_path('covers/'.$book->cover);
+            $oldPath = public_path('covers/' . $book->cover);
             if ($book->cover && file_exists($oldPath)) {
                 unlink($oldPath);
             }
@@ -82,11 +88,11 @@ class BookController extends Controller
         }
 
         $book->update([
-            'judul'     => $request->judul,
-            'penulis'   => $request->penulis,
-            'penerbit'  => $request->penerbit,
-            'tahun'     => $request->tahun,
-            'cover'     => $fileName,
+            'judul'    => $request->judul,
+            'penulis'  => $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun'    => $request->tahun,
+            'cover'    => $fileName,
         ]);
 
         return redirect()->route('books.index')->with('success', 'Buku berhasil diupdate!');
@@ -95,7 +101,7 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         // hapus file cover
-        $coverPath = public_path('covers/'.$book->cover);
+        $coverPath = public_path('covers/' . $book->cover);
         if ($book->cover && file_exists($coverPath)) {
             unlink($coverPath);
         }

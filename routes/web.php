@@ -18,3 +18,6 @@ Route::get('/dashboard', function () {
 });
 
 Route::resource('/books', BookController::class);
+Route::prefix('admin')->group(function () {
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+});
