@@ -9,7 +9,7 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffDashboard::class, 'index'])
         ->name('dashboard');
 });
- bnj hbgvgv
+
 Route::middleware(['auth', 'role:staff'])->group(function () {
     // Halaman List Peminjaman
     Route::get('/staff/peminjaman', [PeminjamanController::class, 'index'])->name('staff.peminjaman');
@@ -27,3 +27,4 @@ Route::resource('/books', BookController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
 });
+

@@ -55,7 +55,7 @@ class BookController extends Controller
         return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan!');
     }
 
-    public function edit(Book $book, Category $category)
+    public function edit(Book $book)
     {
         return view('admin.books.edit', compact('book', 'categories'));
         $categories = Category::all();
