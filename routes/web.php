@@ -3,7 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\Staff\DashboardController as StaffDashboard;
 
+Route::prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [StaffDashboard::class, 'index'])
+        ->name('dashboard');
+});
+ bnj hbgvgv
 Route::middleware(['auth', 'role:staff'])->group(function () {
     // Halaman List Peminjaman
     Route::get('/staff/peminjaman', [PeminjamanController::class, 'index'])->name('staff.peminjaman');
