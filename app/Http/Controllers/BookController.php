@@ -23,8 +23,8 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('admin.books.create');
         $categories = Category::all();
+        return view('admin.books.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -55,9 +55,9 @@ class BookController extends Controller
         return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan!');
     }
 
-    public function edit(Book $book)
+    public function edit(Book $book, Category $category)
     {
-        return view('admin.books.edit', compact('book'));
+        return view('admin.books.edit', compact('book', 'categories'));
         $categories = Category::all();
 
     }
