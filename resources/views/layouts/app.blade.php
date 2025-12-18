@@ -66,7 +66,7 @@
                     @endrole
 
                     {{-- ================= STAFF ================= --}}
-                    @role('staff')
+                    {{-- @role('staff')
                         <li class="sidebar-header">Staff</li>
 
                         <li class="sidebar-item">
@@ -82,7 +82,23 @@
                                 <span>Daftar Buku</span>
                             </a>
                         </li>
-                    @endrole
+                    @endrole --}}
+                    <li class="sidebar-header">Staff</li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('staff.dashboard') }}">
+                            <i data-feather="sliders"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('books.index') }}">
+                            <i data-feather="book"></i>
+                            <span>Daftar Buku</span>
+                        </a>
+                    </li>
+
 
                 </ul>
 

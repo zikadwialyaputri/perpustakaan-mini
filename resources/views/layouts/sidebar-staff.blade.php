@@ -11,8 +11,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('staff.books.index') }}">
+            <li class="sidebar-item {{ request()->routeIs('books.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('books.index') }}">
                     <i data-feather="book"></i> Daftar Buku
                 </a>
             </li>

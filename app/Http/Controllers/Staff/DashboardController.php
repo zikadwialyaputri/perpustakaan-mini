@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
@@ -9,8 +8,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('staff.dashboard', [
-            'totalBuku' => Book::count(),
-        ]);
+        $books     = Book::latest()->get();
+        $totalBuku = $books->count();
+
+        return view('staff.dashboard', compact('books', 'totalBuku'));
     }
 }
