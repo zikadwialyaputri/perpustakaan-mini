@@ -31,89 +31,12 @@
                 </a>
 
                 <ul class="sidebar-nav">
-
-                    {{-- ================= ADMIN ================= --}}
-                    @role('admin')
-                        <li class="sidebar-header">Admin</li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
-                                <i data-feather="sliders"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('books.index') }}">
-                                <i data-feather="book"></i>
-                                <span>Kelola Buku</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('categories.index') }}">
-                                <i data-feather="layers"></i>
-                                <span>Kategori</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('users.index') }}">
-                                <i data-feather="users"></i>
-                                <span>Kelola User</span>
-                            </a>
-                        </li>
-                    @endrole
-
-                    {{-- ================= STAFF ================= --}}
-                    {{-- @role('staff')
-                        <li class="sidebar-header">Staff</li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('staff.dashboard') }}">
-                                <i data-feather="sliders"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('books.index') }}">
-                                <i data-feather="book"></i>
-                                <span>Daftar Buku</span>
-                            </a>
-                        </li>
-                    @endrole --}}
-                    <li class="sidebar-header">Staff</li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('staff.dashboard') }}">
-                            <i data-feather="sliders"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('books.index') }}">
-                            <i data-feather="book"></i>
-                            <span>Daftar Buku</span>
-                        </a>
-                    </li>
-
-
+                    @if (auth()->user()->hasRole('admin'))
+                        @include('layouts.sidebar-admin')
+                    @elseif(auth()->user()->hasRole('staff'))
+                        @include('layouts.sidebar-staff')
+                    @endif
                 </ul>
-
-
-                <div class="sidebar-cta">
-                    <div class="sidebar-cta-content">
-                        <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
-                        <div class="mb-3 text-sm">
-                            Are you looking for more components? Check out our premium version.
-                        </div>
-                        <div class="d-grid">
-                            <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </nav>
 

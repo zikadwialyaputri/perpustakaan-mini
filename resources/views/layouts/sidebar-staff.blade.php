@@ -1,5 +1,6 @@
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-content">
+
         <a class="sidebar-brand" href="{{ route('staff.dashboard') }}">
             Perpustakaan Mini
         </a>
@@ -11,11 +12,12 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ request()->routeIs('books.*') ? 'active' : '' }}">
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('books.index') }}">
                     <i data-feather="book"></i> Daftar Buku
                 </a>
             </li>
         </ul>
+
     </div>
 </nav>

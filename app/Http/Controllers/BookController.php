@@ -18,13 +18,13 @@ class BookController extends Controller
             ->orderByDesc('id')
             ->paginate(10);
 
-        return view('admin.books.index', compact('book'));
+        return view('books.index', compact('book'));
     }
 
     public function create()
     {
         $categories = Category::all();
-        return view('admin.books.create', compact('categories'));
+        return view('books.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -57,7 +57,7 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        return view('admin.books.edit', compact('book', 'categories'));
+        return view('books.edit', compact('book', 'categories'));
         $categories = Category::all();
 
     }

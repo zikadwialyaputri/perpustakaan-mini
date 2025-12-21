@@ -4,7 +4,7 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between mb-3">
         <h3>Data Kategori</h3>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
             + Tambah Kategori
         </a>
     </div>
@@ -21,10 +21,10 @@
             <tr>
                 <td>{{ $item->name }}</td>
                 <td>
-                    <a href="{{ route('categories.edit', $item->id) }}"
+                    <a href="{{ route('admin.categories.edit', $item->id) }}"
                        class="btn btn-warning btn-sm">Edit</a>
 
-                    <form action="{{ route('categories.destroy', $item->id) }}"
+                    <form action="{{ route('admin.categories.destroy', $item->id) }}"
                           method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
