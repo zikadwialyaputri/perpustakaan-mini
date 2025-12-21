@@ -32,11 +32,13 @@ Route::middleware(['auth', 'role:admin'])
     });
 
 //staff
-Route::middleware(['auth', 'role:staff'])
-    ->prefix('staff')
-    ->name('staff.')
+// Baris 36-44 (Blok Route Group untuk Staff)
+Route::middleware(['auth', 'role:staff']) // Proteksi login & role staff
+    ->prefix('staff')                     // Menambahkan /staff/ di URL
+    ->name('staff.')                      // Memberikan prefix 'staff.' pada nama route
     ->group(function () {
 
+        // Baris 41-42 (Halaman Utama Staff)
         Route::get('/dashboard', [StaffDashboard::class, 'index'])
-            ->name('dashboard');
+            ->name('dashboard');          // Nama lengkap route: staff.dashboard
     });
