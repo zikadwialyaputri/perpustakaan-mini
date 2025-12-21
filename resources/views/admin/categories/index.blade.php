@@ -17,21 +17,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($categories as $item)
+            @foreach ($book as $item)
             <tr>
-                <td>{{ $item->name }}</td>
                 <td>
-                    <a href="{{ route('admin.categories.edit', $item->id) }}"
-                       class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ route('books.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                    <form action="{{ route('admin.categories.destroy', $item->id) }}"
-                          method="POST" class="d-inline">
+                    <form action="{{ route('books.destroy', $item->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('Hapus kategori?')">
-                            Hapus
-                        </button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus?')">Hapus</button>
                     </form>
                 </td>
             </tr>

@@ -13,8 +13,10 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //books
+// Cari bagian ini di web.php Anda dan pastikan seperti ini:
 Route::middleware(['auth'])->group(function () {
-    Route::resource('books', BookController::class);
+    // Ini akan mencakup index, create, store, edit, update, DAN destroy
+    Route::resource('books', BookController::class); 
 });
 //admin
 Route::middleware(['auth', 'role:admin'])

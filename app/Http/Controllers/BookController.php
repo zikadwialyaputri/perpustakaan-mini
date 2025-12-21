@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Book;
@@ -55,57 +56,63 @@ class BookController extends Controller
         return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan!');
     }
 
+    // Tambahkan ini di paling atas file jika belum ada
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book', 'categories'));
+        // Ambil semua data kategori dari database
         $categories = Category::all();
 
+        // Sekarang variabel $categories sudah tersedia untuk dikirim ke view
+        return view('books.edit', compact('book', 'categories'));
     }
 
     public function update(Request $request, Book $book)
     {
+        // 1. Validasi menggunakan nama input yang ada di Blade
         $request->validate([
-            'judul'       => 'required',
-            'penulis'     => 'required',
-            'cover'       => 'image|mimes:jpg,png,jpeg|max:2048',
-            'category_id' => $request->category_id,
+            'category_id' => 'required',
+            'judul'       => 'required', // Sesuaikan dengan name="judul"
+            'penulis'     => 'required', // Sesuaikan dengan name="penulis"
+            'penerbit'    => 'required',
+            'tahun'       => 'required|numeric',
+            'cover'       => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $fileName = $book->cover;
+        // 2. Siapkan data untuk update
+        $data = [
+            'category_id' => $request->category_id,
+            'judul'       => $request->judul,
+            'penulis'     => $request->penulis,
+            'penerbit'    => $request->penerbit,
+            'tahun'       => $request->tahun,
+        ];
 
-        // Jika upload cover baru
+        // 3. Logika Upload Foto (Jika ada file baru)
         if ($request->hasFile('cover')) {
-
-            // Hapus file lama (jika ada)
-            $oldPath = public_path('covers/' . $book->cover);
-            if ($book->cover && file_exists($oldPath)) {
-                unlink($oldPath);
+            // Hapus cover lama jika ada di folder public/covers
+            if ($book->cover && file_exists(public_path('covers/' . $book->cover))) {
+                unlink(public_path('covers/' . $book->cover));
             }
 
-            // Upload baru
             $fileName = time() . '.' . $request->cover->extension();
             $request->cover->move(public_path('covers'), $fileName);
+            $data['cover'] = $fileName;
         }
 
-        $book->update([
-            'judul'    => $request->judul,
-            'penulis'  => $request->penulis,
-            'penerbit' => $request->penerbit,
-            'tahun'    => $request->tahun,
-            'cover'    => $fileName,
-        ]);
+        // 4. Eksekusi Update ke Database
+        $book->update($data);
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil diupdate!');
+        return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui!');
     }
-
     public function destroy(Book $book)
     {
-        // hapus file cover
+        // Hapus file fisik cover jika ada
         $coverPath = public_path('covers/' . $book->cover);
         if ($book->cover && file_exists($coverPath)) {
             unlink($coverPath);
         }
 
+        // Hapus data dari database
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus!');
