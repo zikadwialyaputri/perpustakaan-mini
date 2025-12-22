@@ -11,7 +11,6 @@ class RoleMiddleware
 {
   public function handle(Request $request, Closure $next, $role): Response
 {
-    // Menggunakan Auth facade biasanya menghilangkan garis merah di VS Code
     if (Auth::check() && Auth::user()->role == $role) {
         return $next($request);
     }
