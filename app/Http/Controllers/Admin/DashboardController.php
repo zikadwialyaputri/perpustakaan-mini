@@ -15,6 +15,7 @@ class DashboardController extends Controller
             'totalBuku'     => Book::count(),
             'totalKategori' => Category::count(),
             'totalUser'     => User::count(),
+            'books'         => Book::latest()->get(),
         ]);
     }
 }

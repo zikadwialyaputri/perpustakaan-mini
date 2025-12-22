@@ -1,10 +1,6 @@
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-content">
 
-        <a class="sidebar-brand" href="{{ route('admin.dashboard') }}">
-            Perpustakaan Mini
-        </a>
-
         <ul class="sidebar-nav">
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
