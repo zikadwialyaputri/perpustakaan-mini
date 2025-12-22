@@ -1,55 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+    <div class="container py-4">
 
-    <div class="d-flex justify-content-between mb-3">
-        <h3>Data Kategori</h3>
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
-            + Tambah Kategori
-        </a>
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Data Kategori</h3>
+            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
+                + Tambah Kategori
+            </a>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th width="150">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($categories as $item)
+                    <tr>
+                        <td>{{ $item->name }}</td>
+                        <td>
+                            <a href="{{ route('admin.categories.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+
+                            @if (auth()->user()->hasRole('admin'))
+                                <form action="{{ route('admin.categories.destroy', $item->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Hapus kategori ini?')">
+                                        Hapus
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">
+                            Belum ada kategori
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        {{ $categories->links() }}
     </div>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nama</th>
-                <th width="150">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($categories as $item)
-                <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>
-                        <a href="{{ route('admin.categories.edit', $item->id) }}"
-                           class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-
-                        <form action="{{ route('admin.categories.destroy', $item->id) }}"
-                              method="POST"
-                              class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Hapus kategori ini?')">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="2" class="text-center text-muted">
-                        Belum ada kategori
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-
-    {{ $categories->links() }}
-</div>
 @endsection
