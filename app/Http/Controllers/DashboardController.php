@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book; // Pastikan Model Book dipanggil
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        // Mengambil data untuk ditampilkan di Dashboard
-        $data = [
-            'total_buku'    => Book::count(), // Munculkan total semua buku
-            'stok_habis'    => Book::where('stok', 0)->count(), // Buku yang stoknya 0
-            'buku_terbaru'  => Book::latest()->take(5)->get(), // 5 buku terakhir yang ditambah/edit
-        ];
+  public function index(Request $request)
+{
+    // 1. Logika Pencarian (Bisa untuk semua orang)
+    $search = $request->query('search');
+    $books = \App\Models\Book::when($search, function($query, $search) {
+        return $query->where('judul', 'like', "%{$search}%")
+                     ->orWhere('penulis', 'like', "%{$search}%");
+    })->paginate(8);
 
-        return view('dashboard', $data);
+    // 2. Data Statistik (Penyebab error jika tidak didefinisikan)
+    // Kita definisikan di luar agar Guest tetap punya variabel ini meskipun isinya 0 atau data publik
+    $total_buku = \App\Models\Book::count();
+    $stok_habis = \App\Models\Book::where('stok', 0)->count();
+    $buku_terbaru = \App\Models\Book::latest()->take(5)->get();
+
+    return view('staff.dashboard', compact(
+        'books', 'total_buku', 'stok_habis', 'buku_terbaru'
+    ));
     }
 }

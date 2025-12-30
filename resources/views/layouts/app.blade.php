@@ -24,19 +24,19 @@
 
 <body>
     <div class="wrapper">
+        @auth
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-
                 <ul class="sidebar-nav">
                     @if (auth()->user()->hasRole('admin'))
-                        @include('layouts.sidebar-admin')
-                    @elseif(auth()->user()->hasRole('staff'))
-                        @include('layouts.sidebar-staff')
+                    @include('layouts.sidebar-admin')
+                    @elseif (auth()->user()->hasRole('staff'))
+                    @include('layouts.sidebar-staff')
                     @endif
                 </ul>
             </div>
         </nav>
-
+        @endauth
         <div class="main">
             <nav class="navbar navbar-expand navbar-light navbar-bg">
                 <a class="sidebar-toggle js-sidebar-toggle">

@@ -7,8 +7,17 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboard;
+// Semua orang (termasuk Guest) bisa buka dashboard
+Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
 
-//auth
+// Hanya yang login bisa kelola buku (CRUD)
+Route::middleware(['auth'])->group(function () {
+    Route::resource('books', BookController::class);
+});
+// Halaman utama yang bisa diakses Guest (Tanpa Login)
+Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
+
+// Auth Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

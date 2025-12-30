@@ -1,272 +1,164 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid p-0">
+<div class="container-fluid p-4">
 
-        <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+    {{-- ========================= GUEST ========================= --}}
+    @guest
+        <h3 class="mb-4">Daftar Buku</h3>
 
-        <div class="row">-
-            <div class="col-xl-6 col-xxl-5 d-flex">
-                <div class="w-100">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Sales</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">2.382</h1>
-                                    <div class="mb-0">
-                                        <span class="text-danger">-3.65%</span>
-                                        <span class="text-muted">Since last week</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Visitors</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="users"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">14.212</h1>
-                                    <div class="mb-0">
-                                        <span class="text-success">5.25%</span>
-                                        <span class="text-muted">Since last week</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Earnings</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="dollar-sign"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">$21.300</h1>
-                                    <div class="mb-0">
-                                        <span class="text-success">6.65%</span>
-                                        <span class="text-muted">Since last week</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Orders</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="shopping-cart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">64</h1>
-                                    <div class="mb-0">
-                                        <span class="text-danger">-2.25%</span>
-                                        <span class="text-muted">Since last week</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {{-- SEARCH --}}
+        <form method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Cari judul atau penulis buku..."
+                       value="{{ request('search') }}">
+                <button class="btn btn-primary">Cari</button>
             </div>
-
-            <div class="col-xl-6 col-xxl-7">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Recent Movement</h5>
-                    </div>
-                    <div class="card-body py-3">
-                        <div class="chart chart-sm">
-                            <canvas id="chartjs-dashboard-line"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
 
         <div class="row">
-            <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
+            @forelse ($books as $book)
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ asset('covers/'.$book->cover) }}"
+                             class="card-img-top"
+                             style="height:200px; object-fit:cover">
 
-                        <h5 class="card-title mb-0">Browser Usage</h5>
+                        <div class="card-body">
+                            <h6 class="fw-bold mb-1">{{ $book->judul }}</h6>
+                            <small class="text-muted">{{ $book->penulis }}</small>
+
+                            <div class="mt-2">
+                                <span class="badge bg-info">
+                                    Stok: {{ $book->stok }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body d-flex">
-                        <div class="align-self-center w-100">
-                            <div class="py-3">
-                                <div class="chart chart-xs">
-                                    <canvas id="chartjs-dashboard-pie"></canvas>
+                </div>
+            @empty
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        Buku tidak ditemukan
+                    </div>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="mt-3">
+            {{ $books->links() }}
+        </div>
+    @endguest
+
+
+
+    {{-- ========================= STAFF ========================= --}}
+    @auth
+        <h1 class="h3 mb-3"><strong>Dashboard</strong> Staff</h1>
+
+        {{-- INFO CARD --}}
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6>Total Buku</h6>
+                        <h3>{{ $total_buku }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6>Stok Habis</h6>
+                        <h3>{{ $stok_habis }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- BUKU TERBARU --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Buku Terbaru</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Penulis</th>
+                            <th>Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($buku_terbaru as $buku)
+                            <tr>
+                                <td>{{ $buku->judul }}</td>
+                                <td>{{ $buku->penulis }}</td>
+                                <td>
+                                    <span class="badge bg-{{ $buku->stok == 0 ? 'danger' : 'success' }}">
+                                        {{ $buku->stok }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{-- DAFTAR BUKU + TAMBAH --}}
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Buku</h5>
+                <a href="{{ route('books.create') }}" class="btn btn-primary btn-sm">
+                    + Tambah Buku
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @foreach ($books as $book)
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{{ asset('covers/'.$book->cover) }}"
+                                     class="card-img-top"
+                                     style="height:180px; object-fit:cover">
+
+                                <div class="card-body">
+                                    <h6 class="fw-bold">{{ $book->judul }}</h6>
+                                    <small>{{ $book->penulis }}</small>
+
+                                    <div class="mt-3 d-flex justify-content-between">
+                                        <a href="{{ route('books.edit', $book->id) }}"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('books.destroy', $book->id) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Yakin hapus buku?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-
-                            <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td>Chrome</td>
-                                        <td class="text-end">4306</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Firefox</td>
-                                        <td class="text-end">3801</td>
-                                    </tr>
-                                    <tr>
-                                        <td>IE</td>
-                                        <td class="text-end">1689</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            </div>
-            <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
 
-                        <h5 class="card-title mb-0">Real-Time</h5>
-                    </div>
-                    <div class="card-body px-4">
-                        <div id="world_map" style="height:350px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-                <div class="card flex-fill">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Calendar</h5>
-                    </div>
-                    <div class="card-body d-flex">
-                        <div class="align-self-center w-100">
-                            <div class="chart">
-                                <div id="datetimepicker-dashboard"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{ $books->links() }}
             </div>
         </div>
+    @endauth
 
-        <div class="row">
-            <div class="col-12 col-lg-8 col-xxl-9 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Latest Projects</h5>
-                    </div>
-                    <table class="table table-hover my-0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th class="d-none d-xl-table-cell">Start Date</th>
-                                <th class="d-none d-xl-table-cell">End Date</th>
-                                <th>Status</th>
-                                <th class="d-none d-md-table-cell">Assignee</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Project Apollo</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-success">Done</span></td>
-                                <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                            </tr>
-                            <tr>
-                                <td>Project Fireball</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-danger">Cancelled</span></td>
-                                <td class="d-none d-md-table-cell">William Harris</td>
-                            </tr>
-                            <tr>
-                                <td>Project Hades</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-success">Done</span></td>
-                                <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                            </tr>
-                            <tr>
-                                <td>Project Nitro</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-warning">In progress</span></td>
-                                <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                            </tr>
-                            <tr>
-                                <td>Project Phoenix</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-success">Done</span></td>
-                                <td class="d-none d-md-table-cell">William Harris</td>
-                            </tr>
-                            <tr>
-                                <td>Project X</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-success">Done</span></td>
-                                <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                            </tr>
-                            <tr>
-                                <td>Project Romeo</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-success">Done</span></td>
-                                <td class="d-none d-md-table-cell">Christina Mason</td>
-                            </tr>
-                            <tr>
-                                <td>Project Wombat</td>
-                                <td class="d-none d-xl-table-cell">01/01/2023</td>
-                                <td class="d-none d-xl-table-cell">31/06/2023</td>
-                                <td><span class="badge bg-warning">In progress</span></td>
-                                <td class="d-none d-md-table-cell">William Harris</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4 col-xxl-3 d-flex">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Monthly Sales</h5>
-                    </div>
-                    <div class="card-body d-flex w-100">
-                        <div class="align-self-center chart chart-lg">
-                            <canvas id="chartjs-dashboard-bar"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+</div>
 @endsection
