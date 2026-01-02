@@ -2,7 +2,7 @@
     <div class="sidebar-content">
 
         <a class="sidebar-brand" href="{{ route('dashboard') }}">
-            Perpustakaan Mini
+            Perpustakaan Kata Aksara
         </a>
 
         <ul class="sidebar-nav">
@@ -24,7 +24,7 @@
 
             <li class="sidebar-item">
                 <span class="sidebar-link text-muted">
-                    Sistem Perpustakaan Mini<br>
+                    Sistem Perpustakaan Kata Aksara<br>
                     Versi 1.0
                 </span>
             </li>

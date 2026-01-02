@@ -2,7 +2,7 @@
     <div class="sidebar-content">
 
         <a class="sidebar-brand" href="{{ route('staff.dashboard') }}">
-            Perpustakaan Mini
+            Perpustakaan Kata Aksara
         </a>
 
         <ul class="sidebar-nav">
