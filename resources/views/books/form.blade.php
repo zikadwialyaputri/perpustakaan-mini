@@ -3,8 +3,7 @@
     <select name="category_id" class="form-control">
         <option value="">-- Pilih Kategori --</option>
         @foreach ($categories as $cat)
-            <option value="{{ $cat->id }}"
-                @selected(old('category_id', $book->category_id ?? '') == $cat->id)>
+            <option value="{{ $cat->id }}" @selected(old('category_id', $book->category_id ?? '') == $cat->id)>
                 {{ $cat->name }}
             </option>
         @endforeach
@@ -29,11 +28,13 @@
     <label class="form-label">Tahun</label>
     <input type="number" name="tahun" class="form-control" value="{{ old('tahun', $book->tahun ?? '') }}">
 </div>
-
+<div class="mb-3">
+    <label class="form-label">Deskripsi Buku</label>
+    <textarea name="deskripsi" class="form-control" rows="4">{{ old('deskripsi', $book->deskripsi ?? '') }}</textarea>
+</div>
 <div class="mb-3">
     <label class="form-label">Foto Buku</label>
     <input type="file" name="cover" class="form-control">
-
     @isset($book)
         @if ($book->cover)
             <img src="{{ asset('covers/' . $book->cover) }}" width="120" class="mt-2">

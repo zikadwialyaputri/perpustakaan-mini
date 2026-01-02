@@ -15,6 +15,7 @@ class Book extends Model
         'tahun',
         'cover',
         'category_id',
+        'deskripsi',
     ];
     public function category()
     {

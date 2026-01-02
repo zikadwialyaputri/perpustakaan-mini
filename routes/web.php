@@ -1,30 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboard;
-// Semua orang (termasuk Guest) bisa buka dashboard
-Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
+use Illuminate\Support\Facades\Route;
 
-// Hanya yang login bisa kelola buku (CRUD)
-Route::middleware(['auth'])->group(function () {
-    Route::resource('books', BookController::class);
-});
-// Halaman utama yang bisa diakses Guest (Tanpa Login)
-Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
+//guest
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-// Auth Routes
+//auth
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 //books
 Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class);
 });
+Route::get('/books/{book}', [BookController::class, 'show'])
+    ->name('books.show');
+Route::resource('books', BookController::class)->only(['show']);
+
 //admin
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
@@ -39,9 +39,9 @@ Route::middleware(['auth', 'role:admin'])
     });
 
 //staff
-Route::middleware(['auth', 'role:staff']) // Proteksi login & role staff
-    ->prefix('staff')                     // Menambahkan /staff/ di URL
-    ->name('staff.')                      // Memberikan prefix 'staff.' pada nama route
+Route::middleware(['auth', 'role:staff'])
+    ->prefix('staff')
+    ->name('staff.')
     ->group(function () {
 
         Route::get('/dashboard', [StaffDashboard::class, 'index'])

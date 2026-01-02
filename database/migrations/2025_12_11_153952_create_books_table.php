@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('penulis');
             $table->string('penerbit')->nullable();
             $table->year('tahun')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->string('cover')->nullable(); // lokasi foto
             $table->timestamps();
         });

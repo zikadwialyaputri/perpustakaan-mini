@@ -1,5 +1,8 @@
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-content">
+        <a class="sidebar-brand" href="{{ route('staff.dashboard') }}">
+            Perpustakaan Mini
+        </a>
 
         <ul class="sidebar-nav">
             <li class="sidebar-item">
@@ -26,6 +29,14 @@
                 </a>
             </li>
         </ul>
+        <div class="mt-auto p-3">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button class="btn btn-danger w-100">
+                    Logout
+                </button>
+            </form>
+        </div>
 
     </div>
 </nav>
