@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($book as $item)
+            @foreach ($books as $item)
             <tr>
                 <td>
                     @if ($item->cover)
@@ -53,7 +53,7 @@
         </tbody>
     </table>
 
-    {{ $book->links() }}
+    {{ $books->links() }}
 
 </div>
 @endsection

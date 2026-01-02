@@ -6,7 +6,7 @@
         <h3 class="mb-4">Koleksi Buku Perpustakaan</h3>
 
         {{-- SEARCH + FILTER --}}
-        <form method="GET" class="row mb-4 g-2">
+        <form method="GET" action="{{ route('dashboard') }}" class="row mb-4 g-2">
             <div class="col-md-5">
                 <input type="text" name="search" class="form-control" placeholder="Cari judul atau penulis buku..."
                     value="{{ request('search') }}">
@@ -17,7 +17,7 @@
                     <option value="">Semua Kategori</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->nama }}
+                            {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
@@ -39,7 +39,7 @@
                         <div class="card h-100 shadow-sm book-card">
 
                             <img src="{{ $book->cover ? asset('covers/' . $book->cover) : asset('img/no-cover.png') }}"
-                                class="card-img-top" style="height:200px; object-fit:cover" alt="Cover {{ $book->judul }}"
+                                class="card-img-top book-cover" alt="Cover {{ $book->judul }}"
                                 loading="lazy">
 
                             <div class="card-body">
@@ -62,7 +62,7 @@
                                 @if ($book->category)
                                     <div class="mt-2">
                                         <span class="badge bg-secondary">
-                                            {{ $book->category->nama }}
+                                            {{ $book->category->name }}
                                         </span>
                                     </div>
                                 @endif

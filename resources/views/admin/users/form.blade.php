@@ -28,3 +28,8 @@
         @endforeach
     </select>
 </div>
+<div class="mb-3">
+    <label class="form-label">Foto Profil</label>
+    <input type="file" name="photo" class="form-control">
+</div>
+

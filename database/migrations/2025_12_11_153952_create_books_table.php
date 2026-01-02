@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('categories')
+                ->nullOnDelete();
             $table->string('judul');
             $table->string('penulis');
             $table->string('penerbit')->nullable();

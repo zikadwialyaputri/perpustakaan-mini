@@ -7,9 +7,7 @@ class Category extends Model
 {
     protected $table = 'categories';
 
-    protected $fillable = [
-        'name',
-    ];
+    protected $fillable = ['name'];
 
     //RELASI: 1 KATEGORI PUNYA BANYAK BUKU
     public function books()
