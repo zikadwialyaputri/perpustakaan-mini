@@ -2,6 +2,20 @@
 
 @section('content')
     <div class="container-fluid p-4">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+        <h4 class="mb-1">
+            👋 Selamat datang,
+            {{ auth()->user()->nickname ?? auth()->user()->name }}
+        </h4>
+
+        <p class="text-muted mb-4">
+            Semoga harimu menyenangkan 🌱
+        </p>
         <h3 class="mb-4">Dashboard Admin</h3>
 
         <div class="row">

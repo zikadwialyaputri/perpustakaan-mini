@@ -31,6 +31,7 @@ class UserController extends Controller
             'email'    => 'required|email|unique:users',
             'password' => 'required|min:6',
             'role'     => 'required',
+            'photo'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
         if ($request->hasFile('photo')) {
             $manager = new ImageManager(new Driver());
@@ -46,10 +47,12 @@ class UserController extends Controller
             $data['photo'] = $fileName;
         }
 
+
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
+            'photo'    => $data['photo'] ?? null,
         ]);
 
         $user->assignRole($data['role']);
@@ -73,7 +76,6 @@ class UserController extends Controller
         ]);
         if ($request->hasFile('photo')) {
 
-            // Hapus foto lama
             if ($user->photo && file_exists(public_path('profiles/' . $user->photo))) {
                 unlink(public_path('profiles/' . $user->photo));
             }
