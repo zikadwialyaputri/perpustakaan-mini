@@ -3,34 +3,42 @@
 @section('content')
     <div class="container-fluid p-4">
 
-        <h3 class="mb-4">Koleksi Buku Perpustakaan</h3>
+        <div class="hero-mini">
+            <h2>📚 Jelajahi Koleksi Buku</h2>
+            <p>Temukan bacaan terbaik untuk menemani harimu</p>
+        </div>
+        <div class="search-box">
+            {{-- SEARCH + FILTER --}}
+            <form method="GET" action="{{ route('dashboard') }}" class="row mb-4 g-2">
+                <div class="col-md-5">
+                    <input type="text" name="search" class="form-control" placeholder="Cari judul atau penulis buku..."
+                        value="{{ request('search') }}">
+                </div>
 
-        {{-- SEARCH + FILTER --}}
-        <form method="GET" action="{{ route('dashboard') }}" class="row mb-4 g-2">
-            <div class="col-md-5">
-                <input type="text" name="search" class="form-control" placeholder="Cari judul atau penulis buku..."
-                    value="{{ request('search') }}">
-            </div>
+                <div class="col-md-4">
+                    <select name="category" class="form-select">
+                        <option value="">Semua Kategori</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="col-md-4">
-                <select name="category" class="form-select">
-                    <option value="">Semua Kategori</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-md-3">
-                <button class="btn btn-primary w-100">
-                    Cari
-                </button>
-            </div>
-        </form>
-
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100">
+                        Cari
+                    </button>
+                </div>
+            </form>
+        </div>
         {{-- LIST BUKU --}}
+        <h5 class="mb-3 fw-semibold d-flex justify-content-between align-items-center">
+            <span>📖 Koleksi Buku</span>
+            <span class="text-muted fs-6">{{ $books->total() }} buku</span>
+        </h5>
         <div class="row">
             @forelse ($books as $book)
                 <div class="col-md-3 mb-4">
@@ -39,8 +47,7 @@
                         <div class="card h-100 shadow-sm book-card">
 
                             <img src="{{ $book->cover ? asset('covers/' . $book->cover) : asset('img/no-cover.png') }}"
-                                class="card-img-top book-cover" alt="Cover {{ $book->judul }}"
-                                loading="lazy">
+                                class="card-img-top book-cover" alt="Cover {{ $book->judul }}" loading="lazy">
 
                             <div class="card-body">
                                 <h6 class="fw-bold mb-1">
