@@ -55,4 +55,4 @@ Route::middleware(['auth', 'role:staff'])
             ->name('dashboard');
     });
 
-    
+
