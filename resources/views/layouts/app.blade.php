@@ -127,7 +127,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('asset-admin/js/app.js') }}"></script>
+    {{-- <script src="{{ asset('asset-admin/js/app.js') }}"></script> --}}
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

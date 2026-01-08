@@ -13441,3 +13441,29 @@ span.flatpickr-weekday {
         position: relative;
     }
 }
+    /* === FIX TOTAL: HILANGKAN SVG OVERLAY ADMIN KIT === */
+    body svg,
+    .wrapper svg,
+    .main svg,
+    .content svg {
+        display: none !important;
+    }
+
+    /* Matikan pseudo-element background */
+    .wrapper::before,
+    .wrapper::after,
+    .main::before,
+    .main::after {
+        display: none !important;
+        content: none !important;
+    }
+
+    /* Matikan background SVG AdminKit */
+    .wrapper,
+    .main,
+    .content {
+        background-image: none !important;
+    }
+    
+
+}

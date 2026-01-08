@@ -53,7 +53,7 @@
         </tbody>
     </table>
 
-    {{ $books->links() }}
+    {{-- {{ $books->links('pagination::simple-default') }} --}}
 
 </div>
 @endsection

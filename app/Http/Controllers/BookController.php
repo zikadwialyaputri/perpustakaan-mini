@@ -19,7 +19,7 @@ class BookController extends Controller
             });
         })
             ->latest()
-            ->paginate(10);
+            ->simplePaginate(10);
 
         return view('books.index', compact('books'));
     }
