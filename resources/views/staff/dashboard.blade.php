@@ -12,14 +12,16 @@
         @endif
 
         {{-- GREETING --}}
-        <h4 class="mb-1">
-            👋 Selamat datang,
-            {{ auth()->user()->nickname ?? auth()->user()->name }}
-        </h4>
+        <div class="hero-mini mb-4">
+            <h4 class="mb-1">
+                👋 Selamat datang,
+                {{ auth()->user()->nickname ?? auth()->user()->name }}
+            </h4>
 
-        <p class="text-muted mb-4">
-            Semoga harimu menyenangkan 🌱
-        </p>
+            <p class="text-muted mb-0">
+                Semoga harimu menyenangkan 🌱
+            </p>
+        </div>
 
         {{-- JUDUL --}}
         <h3 class="mb-4">Dashboard Staff</h3>
@@ -27,7 +29,7 @@
         {{-- STATISTIK --}}
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm dashboard-card">
                     <div class="card-body">
                         <h6 class="text-muted">Total Buku</h6>
                         <h3 class="mb-0">{{ $totalBuku }}</h3>
@@ -49,15 +51,14 @@
                 <div class="row g-4">
                     @forelse ($books as $book)
                         <div class="col-md-4 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                            <div class="book-card h-100">
 
                                 {{-- COVER --}}
                                 @if ($book->cover)
-                                    <img src="{{ asset('covers/' . $book->cover) }}" class="card-img-top"
-                                        style="height:220px; object-fit:cover;">
+                                    <img src="{{ asset('covers/' . $book->cover) }}" class="book-cover"
+                                        alt="{{ $book->judul }}">
                                 @else
-                                    <div class="d-flex align-items-center justify-content-center bg-light"
-                                        style="height:220px;">
+                                    <div class="book-cover d-flex align-items-center justify-content-center">
                                         <span class="text-muted">No Cover</span>
                                     </div>
                                 @endif

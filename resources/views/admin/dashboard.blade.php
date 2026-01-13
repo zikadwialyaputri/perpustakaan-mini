@@ -9,14 +9,14 @@
             </div>
         @endif
         <div class="hero-mini mb-4">
-        <h4>
-            👋 Selamat datang,
-            {{ auth()->user()->nickname ?? auth()->user()->name }}
-        </h4>
+            <h4>
+                👋 Selamat datang,
+                {{ auth()->user()->nickname ?? auth()->user()->name }}
+            </h4>
 
-        <p class="text-muted mb-4">
-            Semoga harimu menyenangkan 🌱
-        </p>
+            <p class="text-muted mb-4">
+                Semoga harimu menyenangkan 🌱
+            </p>
         </div>
         <h3 class="mb-4">Dashboard Admin</h3>
 
@@ -24,7 +24,7 @@
 
             {{-- TOTAL BUKU --}}
             <div class="col-md-4">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm dashboard-card">
                     <div class="card-body">
                         <h6>Total Buku</h6>
                         <h2>{{ $totalBuku }}</h2>
@@ -37,7 +37,7 @@
 
             {{-- TOTAL KATEGORI --}}
             <div class="col-md-4">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm dashboard-card">
                     <div class="card-body">
                         <h6>Total Kategori</h6>
                         <h2>{{ $totalKategori }}</h2>
@@ -50,7 +50,7 @@
 
             {{-- TOTAL USER --}}
             <div class="col-md-4">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm dashboard-card">
                     <div class="card-body">
                         <h6>Total User</h6>
                         <h2>{{ $totalUser }}</h2>
@@ -63,7 +63,7 @@
 
         </div>
         {{-- DAFTAR BUKU --}}
-        <div class="card shadow-sm">
+        <div class="card shadow-sm dashboard-card">
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3">
                     <h5 class="mb-0">Daftar Buku</h5>
@@ -75,15 +75,14 @@
                 <div class="row g-4">
                     @forelse ($books as $book)
                         <div class="col-md-4 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                            <div class="book-card h-100">
 
                                 {{-- COVER --}}
                                 @if ($book->cover)
-                                    <img src="{{ asset('covers/' . $book->cover) }}" class="card-img-top"
-                                        style="height:220px;object-fit:cover;">
+                                    <img src="{{ asset('covers/' . $book->cover) }}" class="book-cover"
+                                        alt="{{ $book->judul }}">
                                 @else
-                                    <div class="d-flex justify-content-center align-items-center bg-light"
-                                        style="height:220px;">
+                                    <div class="book-cover d-flex justify-content-center align-items-center">
                                         <span class="text-muted">No Cover</span>
                                     </div>
                                 @endif
@@ -103,6 +102,7 @@
 
                             </div>
                         </div>
+
                     @empty
                         <p class="text-muted text-center">Belum ada buku</p>
                     @endforelse
