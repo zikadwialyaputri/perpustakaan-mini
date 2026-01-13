@@ -6,9 +6,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboard;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 
 //edit profile
 Route::middleware('auth')->group(function () {
@@ -28,6 +28,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class);
 });
+Route::get('/books/{book}', [BookController::class, 'show'])
+    ->name('books.show');
+Route::resource('books', BookController::class)->only(['show']);
+
 //admin
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
@@ -50,5 +54,3 @@ Route::middleware(['auth', 'role:staff'])
         Route::get('/dashboard', [StaffDashboard::class, 'index'])
             ->name('dashboard');
     });
-
-
