@@ -13464,6 +13464,54 @@ span.flatpickr-weekday {
     .content {
         background-image: none !important;
     }
-    
-
+    /* Pagination rapi kiri bawah */
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
 }
+
+.pagination-info {
+    font-size: 14px;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: flex !important;
+    flex-direction: row !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0;
+}
+
+.pagination .page-item {
+    display: inline-flex !important;
+    margin: 0 2px;
+}
+
+.pagination .page-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .page-link {
+    min-width: 36px;
+    height: 36px;
+}
+.invalid-feedback {
+    display: block;
+    font-size: 0.875rem;
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+
+
+
+

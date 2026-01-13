@@ -20,7 +20,7 @@ class DashboardController extends Controller
                 $query->where('category_id', $request->category);
             })
             ->latest()
-            ->paginate(8)
+            ->paginate(16)
             ->withQueryString();
 
         return view('dashboard', [

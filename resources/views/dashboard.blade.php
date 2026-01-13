@@ -1,5 +1,32 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style>
+        .pagination-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* kiri */
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #6c757d;
+            white-space: nowrap;
+        }
+
+        .pagination-links .pagination {
+            margin: 0;
+        }
+
+        .pagination-links .page-item {
+            margin: 0 2px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container-fluid p-4">
 
@@ -87,9 +114,11 @@
                 </div>
             @endforelse
         </div>
-        <div class="mt-3">
-            {{ $books->withQueryString()->links() }}
-        </div>
+        @guest
+            <div class="mt-4">
+                {{ $books->links('pagination.guest') }}
+            </div>
+        @endguest
 
     </div>
 @endsection

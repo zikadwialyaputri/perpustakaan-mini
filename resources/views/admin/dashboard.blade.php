@@ -8,7 +8,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        <h4 class="mb-1">
+        <div class="hero-mini mb-4">
+        <h4>
             👋 Selamat datang,
             {{ auth()->user()->nickname ?? auth()->user()->name }}
         </h4>
@@ -16,6 +17,7 @@
         <p class="text-muted mb-4">
             Semoga harimu menyenangkan 🌱
         </p>
+        </div>
         <h3 class="mb-4">Dashboard Admin</h3>
 
         <div class="row">

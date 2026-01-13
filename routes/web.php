@@ -28,10 +28,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class);
 });
-Route::get('/books/{book}', [BookController::class, 'show'])
-    ->name('books.show');
-Route::resource('books', BookController::class)->only(['show']);
-
 //admin
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')

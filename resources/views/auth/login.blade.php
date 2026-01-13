@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Login | Kata Aksara</title>
 
     {{-- CSS Utama --}}
     <link href="{{ asset('asset-admin/css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     {{-- CSS Login Khusus --}}
     <style>
@@ -42,6 +44,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -49,8 +52,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* Button */
@@ -63,62 +71,74 @@
 
 <body>
 
-<div class="login-wrapper">
-    <div class="card shadow login-card">
-        <div class="card-body p-4">
+    <div class="login-wrapper">
+        <div class="card shadow login-card">
+            <div class="card-body p-4">
 
-            {{-- LOGO --}}
-            <div class="text-center mb-3">
-                <img src="{{ asset('asset-admin/img/logo-kata-aksara.jpg') }}"
-                     alt="Kata Aksara"
-                     class="login-logo">
+                {{-- LOGO --}}
+                <div class="text-center mb-3">
+                    <img src="{{ asset('asset-admin/img/logo-kata-aksara.jpg') }}" alt="Kata Aksara" class="login-logo">
+                </div>
+
+                <h4 class="text-center mb-4 fw-bold">Login</h4>
+
+                {{-- FORM LOGIN --}}
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="contoh@email.com"
+                            value="{{ old('email') }}" required autofocus>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" class="form-control"
+                                placeholder="••••••••" required>
+
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100 mt-2">
+                        Login
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ route('dashboard') }}" class="text-decoration-none">
+                            Lanjutkan sebagai tamu
+                        </a>
+                    </div>
+                </form>
+
+                {{-- ERROR --}}
+                @error('email')
+                    <div class="text-danger text-center mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
+
             </div>
-
-            <h4 class="text-center mb-4 fw-bold">Login</h4>
-
-            {{-- FORM LOGIN --}}
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email"
-                           name="email"
-                           class="form-control"
-                           placeholder="contoh@email.com"
-                           required autofocus>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password"
-                           name="password"
-                           class="form-control"
-                           placeholder="••••••••"
-                           required>
-                </div>
-
-                <button class="btn btn-primary w-100 mt-2">
-                    Login
-                </button>
-
-                <div class="text-center mt-3">
-                    <a href="{{ route('dashboard') }}" class="text-decoration-none">
-                        Lanjutkan sebagai tamu
-                    </a>
-                </div>
-            </form>
-
-            {{-- ERROR --}}
-            @error('email')
-                <div class="text-danger text-center mt-3">
-                    {{ $message }}
-                </div>
-            @enderror
-
         </div>
     </div>
-</div>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const icon = togglePassword.querySelector('i');
 
+        togglePassword.addEventListener('click', function() {
+            const isPassword = password.type === 'password';
+            password.type = isPassword ? 'text' : 'password';
+
+            icon.className = isPassword ?
+                'bi bi-eye-slash' :
+                'bi bi-eye';
+        });
+    </script>
 </body>
+
 </html>

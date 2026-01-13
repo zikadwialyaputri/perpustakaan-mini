@@ -13,13 +13,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut
     icon" href="img/icons/icon-48x48.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-<title>{{ config('app.name', 'Perpustakaan Kata Aksara') }}</title>
+    <title>{{ config('app.name', 'Perpustakaan Kata Aksara') }}</title>
     <link href="{{ asset('asset-admin/css/app.css') }}" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -51,39 +54,42 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
-                                data-bs-toggle="dropdown">
+                        @auth
+                            @if (auth()->user()->role === 'admin' || auth()->user()->role === 'staff')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                                        data-bs-toggle="dropdown">
 
-                                @if (auth()->check())
-                                    <img src="{{ auth()->user()->photo
-                                        ? asset('profiles/' . auth()->user()->photo)
-                                        : asset('asset-admin/img/default-avatar.png') }}"
-                                        class="avatar img-fluid rounded-circle me-1" alt="{{ auth()->user()->name }}" />
+                                        <img src="{{ auth()->user()->photo
+                                            ? asset('profiles/' . auth()->user()->photo)
+                                            : asset('asset-admin/img/default-avatar.png') }}"
+                                            class="avatar img-fluid rounded-circle me-1" alt="{{ auth()->user()->name }}" />
 
-                                    <span class="text-dark">
-                                        {{ auth()->user()->nickname ?? auth()->user()->name }}
-                                    </span>
-                                @endif
-                            </a>
+                                        <span class="text-dark">
+                                            {{ auth()->user()->nickname ?? auth()->user()->name }}
+                                        </span>
+                                    </a>
 
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                    <i class="align-middle me-1" data-feather="user"></i>
-                                    Edit Profile
-                                </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="align-middle me-1" data-feather="user"></i>
+                                            Edit Profile
+                                        </a>
 
-                                <div class="dropdown-divider"></div>
+                                        <div class="dropdown-divider"></div>
 
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button class="dropdown-item text-danger" type="submit">
-                                        <i class="align-middle me-1" data-feather="log-out"></i>
-                                        Logout
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button class="dropdown-item text-danger" type="submit">
+                                                <i class="align-middle me-1" data-feather="log-out"></i>
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            @endif
+                        @endauth
+
 
                     </ul>
                 </div>
@@ -354,7 +360,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

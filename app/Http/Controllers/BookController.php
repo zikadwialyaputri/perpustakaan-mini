@@ -19,7 +19,7 @@ class BookController extends Controller
             });
         })
             ->latest()
-            ->simplePaginate(10);
+            ->paginate(10);
 
         return view('books.index', compact('books'));
     }
@@ -34,12 +34,20 @@ class BookController extends Controller
     {
         $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'judul'       => 'required',
-            'penulis'     => 'required',
-            'penerbit'    => 'required',
-            'tahun'       => 'required|numeric',
-            'deskripsi'   => 'required',
+            'judul'       => 'required|string|max:255',
+            'penulis'     => 'required|string|max:255',
+            'penerbit'    => 'required|string|max:255',
+            'tahun'       => 'required|digits:4',
+            'deskripsi'   => 'required|string',
             'cover'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'category_id.required' => 'Kategori wajib dipilih',
+            'judul.required'       => 'Judul buku wajib diisi',
+            'penulis.required'     => 'Penulis wajib diisi',
+            'penerbit.required'    => 'Penerbit wajib diisi',
+            'tahun.required'       => 'Tahun wajib diisi',
+            'tahun.digits'         => 'Tahun harus 4 digit',
+            'deskripsi.required'   => 'Deskripsi wajib diisi',
         ]);
 
         $fileName = null;
@@ -82,11 +90,11 @@ class BookController extends Controller
     {
         $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'judul'       => 'required',
-            'penulis'     => 'required',
-            'penerbit'    => 'required',
-            'tahun'       => 'required|numeric',
-            'deskripsi'   => 'required',
+            'judul'       => 'required|string|max:255',
+            'penulis'     => 'required|string|max:255',
+            'penerbit'    => 'required|string|max:255',
+            'tahun'       => 'required|digits:4',
+            'deskripsi'   => 'required|string',
             'cover'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

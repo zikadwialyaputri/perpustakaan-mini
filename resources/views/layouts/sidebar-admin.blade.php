@@ -4,30 +4,33 @@
             Perpustakaan Kata Aksara
         </a>
 
-        <ul class="sidebar-nav">
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
-                    <i data-feather="home"></i> Dashboard
-                </a>
-            </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
+                <i class="bi bi-speedometer2 me-2"></i>
+                Dashboard
+            </a>
+        </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('books.index') }}">
-                    <i data-feather="book"></i> Kelola Buku
-                </a>
-            </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('books.index') }}">
+                <i class="bi bi-book me-2"></i>
+                Kelola Buku
+            </a>
+        </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.categories.index') }}">
-                    <i data-feather="layers"></i> Kelola Kategori
-                </a>
-            </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('admin.categories.index') }}">
+                <i class="bi bi-tags me-2"></i>
+                Kelola Kategori
+            </a>
+        </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.users.index') }}">
-                    <i data-feather="users"></i> Kelola User
-                </a>
-            </li>
-        </ul>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('admin.users.index') }}">
+                <i class="bi bi-people me-2"></i>
+                Kelola User
+            </a>
+        </li>
+
     </div>
 </nav>

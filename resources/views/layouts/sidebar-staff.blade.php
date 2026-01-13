@@ -6,17 +6,21 @@
         </a>
 
         <ul class="sidebar-nav">
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('staff.dashboard') }}">
-                    <i data-feather="home"></i> Dashboard
+                    <i class="bi bi-house-door me-2"></i>
+                    Dashboard
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('books.index') }}">
-                    <i data-feather="book"></i> Daftar Buku
+                    <i class="bi bi-book me-2"></i>
+                    Daftar Buku
                 </a>
             </li>
+
         </ul>
     </div>
 </nav>
