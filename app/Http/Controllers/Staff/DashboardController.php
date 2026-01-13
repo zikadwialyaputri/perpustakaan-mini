@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $books     = Book::latest()->paginate(12);
+        $books     = Book::latest()->paginate(16);
         $totalBuku = Book::count();
 
         return view('staff.dashboard', compact('books', 'totalBuku'));
