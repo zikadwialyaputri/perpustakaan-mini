@@ -13510,6 +13510,16 @@ span.flatpickr-weekday {
 .is-invalid {
     border-color: #dc3545;
 }
+body {
+    background-color: #f7f8fa;
+}
+.book-card-guest .badge {
+    font-size: 12px;
+    border-radius: 12px;
+    padding: 4px 10px;
+}
+
+
 
 
 

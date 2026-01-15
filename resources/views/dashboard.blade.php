@@ -2,30 +2,35 @@
 
 @section('styles')
     <style>
-        .pagination-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            /* kiri */
-            gap: 20px;
-            flex-wrap: wrap;
+        .book-card-guest {
+            border-radius: 18px;
+            background: #fff;
+
+            border: 1px solid rgba(0, 0, 0, 0.04);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.10),
+                0 4px 10px rgba(0, 0, 0, 0.05);
+
+            transition: all 0.25s ease;
+            overflow: hidden;
         }
 
-        .pagination-info {
-            font-size: 14px;
-            color: #6c757d;
-            white-space: nowrap;
+        .book-card-guest:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.14),
+                0 6px 14px rgba(0, 0, 0, 0.08);
         }
 
-        .pagination-links .pagination {
-            margin: 0;
-        }
-
-        .pagination-links .page-item {
-            margin: 0 2px;
+        .book-card-guest .book-cover {
+            height: 220px;
+            object-fit: cover;
+            background: #f4f6f8;
         }
     </style>
 @endsection
+
 
 @section('content')
     <div class="container-fluid p-4">
@@ -71,7 +76,7 @@
                 <div class="col-md-3 mb-4">
 
                     <a href="{{ route('books.show', $book->id) }}" class="text-decoration-none text-dark">
-                        <div class="card h-100 shadow-sm book-card">
+                        <div class="card h-100 book-card book-card-guest">
 
                             <img src="{{ $book->cover ? asset('covers/' . $book->cover) : asset('img/no-cover.png') }}"
                                 class="card-img-top book-cover" alt="Cover {{ $book->judul }}" loading="lazy">
