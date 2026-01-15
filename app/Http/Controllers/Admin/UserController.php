@@ -32,6 +32,17 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'role'     => 'required',
             'photo'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'name.required'     => 'Nama wajib diisi',
+            'email.required'    => 'Email wajib diisi',
+            'email.email'       => 'Format email tidak valid',
+            'email.unique'      => 'Email sudah terdaftar',
+            'password.required' => 'Password wajib diisi',
+            'password.min'      => 'Password minimal 6 karakter',
+            'role.required'     => 'Role wajib dipilih',
+            'photo.image'       => 'Foto harus berupa gambar',
+            'photo.mimes'       => 'Foto harus berformat JPG, JPEG, atau PNG',
+            'photo.max'         => 'Ukuran foto maksimal 2MB',
         ]);
         if ($request->hasFile('photo')) {
             $manager = new ImageManager(new Driver());
@@ -46,7 +57,6 @@ class UserController extends Controller
 
             $data['photo'] = $fileName;
         }
-
 
         $user = User::create([
             'name'     => $data['name'],
@@ -73,7 +83,18 @@ class UserController extends Controller
             'name'  => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role'  => 'required',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'name.required'  => 'Nama wajib diisi',
+            'email.required' => 'Email wajib diisi',
+            'email.email'    => 'Format email tidak valid',
+            'email.unique'   => 'Email sudah digunakan oleh user lain',
+            'role.required'  => 'Role wajib dipilih',
+            'photo.image'    => 'Foto harus berupa gambar',
+            'photo.mimes'    => 'Foto harus berformat JPG, JPEG, atau PNG',
+            'photo.max'      => 'Ukuran foto maksimal 2MB',
         ]);
+
         if ($request->hasFile('photo')) {
 
             if ($user->photo && file_exists(public_path('profiles/' . $user->photo))) {

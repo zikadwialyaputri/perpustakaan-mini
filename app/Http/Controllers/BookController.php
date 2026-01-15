@@ -96,6 +96,14 @@ class BookController extends Controller
             'tahun'       => 'required|digits:4',
             'deskripsi'   => 'required|string',
             'cover'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'category_id.required' => 'Kategori wajib dipilih',
+            'judul.required'       => 'Judul buku wajib diisi',
+            'penulis.required'     => 'Penulis wajib diisi',
+            'penerbit.required'    => 'Penerbit wajib diisi',
+            'tahun.required'       => 'Tahun wajib diisi',
+            'tahun.digits'         => 'Tahun harus 4 digit',
+            'deskripsi.required'   => 'Deskripsi wajib diisi',
         ]);
 
         $data = $request->only([

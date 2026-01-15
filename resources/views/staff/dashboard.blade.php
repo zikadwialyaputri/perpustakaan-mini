@@ -51,41 +51,42 @@
                 <div class="row g-4">
                     @forelse ($books as $book)
                         <div class="col-md-4 col-lg-3">
-                            <div class="book-card h-100">
+                            <a href="{{ route('books.show', $book->id) }}" class="text-decoration-none text-dark">
+                                <div class="book-card h-100">
 
-                                {{-- COVER --}}
-                                @if ($book->cover)
-                                    <img src="{{ asset('covers/' . $book->cover) }}" class="book-cover"
-                                        alt="{{ $book->judul }}">
-                                @else
-                                    <div class="book-cover d-flex align-items-center justify-content-center">
-                                        <span class="text-muted">No Cover</span>
+                                    {{-- COVER --}}
+                                    @if ($book->cover)
+                                        <img src="{{ asset('covers/' . $book->cover) }}" class="book-cover"
+                                            alt="{{ $book->judul }}">
+                                    @else
+                                        <div class="book-cover d-flex align-items-center justify-content-center">
+                                            <span class="text-muted">No Cover</span>
+                                        </div>
+                                    @endif
+
+                                    {{-- BODY --}}
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="fw-bold mb-1">{{ $book->judul }}</h6>
+
+                                        <small class="text-muted mb-1">
+                                            ✍️ {{ $book->penulis }}
+                                        </small>
+
+                                        <small class="text-muted mb-1">
+                                            🏢 {{ $book->penerbit ?? '-' }}
+                                        </small>
+
+                                        <small class="text-muted mb-3">
+                                            📅 {{ $book->tahun ?? '-' }}
+                                        </small>
+
+                                        {{-- ACTION --}}
+                                        <a href="{{ route('books.edit', $book->id) }}"
+                                            class="btn btn-warning btn-sm mt-auto w-100">
+                                            Edit Buku
+                                        </a>
                                     </div>
-                                @endif
-
-                                {{-- BODY --}}
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="fw-bold mb-1">{{ $book->judul }}</h6>
-
-                                    <small class="text-muted mb-1">
-                                        ✍️ {{ $book->penulis }}
-                                    </small>
-
-                                    <small class="text-muted mb-1">
-                                        🏢 {{ $book->penerbit ?? '-' }}
-                                    </small>
-
-                                    <small class="text-muted mb-3">
-                                        📅 {{ $book->tahun ?? '-' }}
-                                    </small>
-
-                                    {{-- ACTION --}}
-                                    <a href="{{ route('books.edit', $book->id) }}"
-                                        class="btn btn-warning btn-sm mt-auto w-100">
-                                        Edit Buku
-                                    </a>
                                 </div>
-                            </div>
                         </div>
                     @empty
                         <div class="col-12 text-center py-5">
