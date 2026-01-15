@@ -38,22 +38,23 @@
                         <td>{{ $item->penulis }}</td>
                         <td>{{ $item->penerbit }}</td>
                         <td>{{ $item->tahun }}</td>
-                        <td>
-                            <a href="{{ route('books.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('books.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                            <form action="{{ route('books.destroy', $item->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Yakin hapus buku ini?')">Hapus</button>
-                            </form>
+                                <form action="{{ route('books.destroy', $item->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin hapus buku ini?')">Hapus</button>
+                                </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        
+
 
     </div>
 @endsection
